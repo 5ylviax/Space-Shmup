@@ -34,7 +34,7 @@ public class Hero : MonoBehaviour
         {
             Debug.LogError("Hero.Awake() - Attempted to assign second Hero.S!");
         }
-        fireEvent += TempFire;
+        // fireEvent += TempFire;
     }
     // Update is called once per frame
     void Update()
@@ -54,24 +54,24 @@ public class Hero : MonoBehaviour
 
         // Allow the ship to fire
 
-        // Use the fireEven to fire Weapons when the Spacebar is pressed.
+        // Use the fireEvent to fire Weapons when the Spacebar is pressed.
         if(Input.GetAxis("Jump") == 1 && fireEvent !=  null)
         {
             fireEvent();
         }
     }
     
-    void TempFire()
-    {
-        GameObject projGO = Instantiate<GameObject>(projectilePrefab);
-        projGO.transform.position = transform.position;
-        Rigidbody rigidB = projGO.GetComponent<Rigidbody>();
+    // void TempFire()
+    // {
+    //     GameObject projGO = Instantiate<GameObject>(projectilePrefab);
+    //     projGO.transform.position = transform.position;
+    //     Rigidbody rigidB = projGO.GetComponent<Rigidbody>();
 
-        ProjectileHero proj = projGO.GetComponent<ProjectileHero>();
-        proj.type = eWeaponType.blaster;
-        float tSpeed = Main.GET_WEAPON_DEFINITION(proj.type).velocity;
-        rigidB.velocity = Vector3.up * tSpeed;
-    }
+    //     ProjectileHero proj = projGO.GetComponent<ProjectileHero>();
+    //     proj.type = eWeaponType.blaster;
+    //     float tSpeed = Main.GET_WEAPON_DEFINITION(proj.type).velocity;
+    //     rigidB.velocity = Vector3.up * tSpeed;
+    // }
 
     void OnTriggerEnter(Collider other)
     {
