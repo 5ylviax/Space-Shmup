@@ -10,6 +10,9 @@ public class Enemy : MonoBehaviour
     public float fireRate = 0.3f; // Seconds/shots (Unused)
     public float health = 10; // Damage needed to destroy this enemy 
     public int score = 100; // Points earned for destroying this 
+    public float powerUpDropChance = 1f; //Chance to drop a PowerUp
+
+    protected bool calledShipsDestroyed = false;
 
     protected BoundsCheck bndCheck;
     void Awake()
@@ -62,6 +65,12 @@ public class Enemy : MonoBehaviour
                 health -= Main.GET_WEAPON_DEFINITION(p.type).damageOnHit;
                 if (health <= 0)
                 {
+                    // Tell Main that this ship was destroyed 
+                    if(!calledShipsDestroyed)
+                    {
+                        calledShipsDestroyed = true;
+                        Main.SHIP_DESTROYED(this);
+                    }
                     //Destroy this Enemy
                     Destroy(this.gameObject);
                 }
