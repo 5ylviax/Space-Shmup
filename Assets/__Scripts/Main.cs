@@ -2,14 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement; // Enbles the loading and reloading of scenes 
-
+using UnityEngine.UI; 
 
 public class Main : MonoBehaviour
 {
     static private Main S; // a private singleton for Main
     static private Dictionary<eWeaponType, WeaponDefinition> WEAP_DICT;
-    [Header("Inscribed")]
+    public static int SCORE = 0;
+    public static int KILLS = 0;
+    public static int SCORE_PER_KILL = 1;
 
+    [Header("Inscribed")]
+    public Text scoreText; 
     public bool spawnEnemies = true;
     public GameObject[] prefabEnemies; // Array of Enemy prefabs 
     public float enemySpawnPerSecond = 0.5f; // #Enemies spawned / second 
@@ -117,8 +121,12 @@ public class Main : MonoBehaviour
     /// <param name="e">The Enemy that was destroyed</param>
     static public void SHIP_DESTROYED(Enemy e)
     {
+        SCORE += SCORE_PER_KILL;
+        KILLS++;
+
+        Debug.Log($"Enemy destroyed! Total Kills: {KILLS} | Score: {SCORE}");
         // Potentially generate a PowerUp
-        if(Random.value <= e.powerUpDropChance) // Underlined red for now 
+        if (Random.value <= e.powerUpDropChance) // Underlined red for now 
         {
             // Choose a PowerUp from the possibilities in powerUpFrequency
             int ndx = Random.Range(0, S.powerUpFrequency.Length);
@@ -134,5 +142,12 @@ public class Main : MonoBehaviour
             pUp.transform.position = e.transform.position;
         }
     }
-
+    
+    void Update()
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = $"Score: {SCORE}";
+        }
+    }
 }

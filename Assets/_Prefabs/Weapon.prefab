@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb24abfefde6a34ab0d9d3f4aa040ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootClip: {fileID: 8300000, guid: 01654894e67b9fe4d94a84324db2bb82, type: 3}
   _type: 2
   def:
     type: 0

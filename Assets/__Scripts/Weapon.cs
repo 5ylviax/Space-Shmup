@@ -49,6 +49,8 @@ public class WeaponDefinition
 }
 public class Weapon : MonoBehaviour
 {
+    private AudioSource audioSource;
+    public AudioClip shootClip; 
     static public Transform PROJECTILE_ANCHOR;
     [Header("Dynamic")]
     [SerializeField]
@@ -61,6 +63,11 @@ public class Weapon : MonoBehaviour
     private Transform shotPointTrans;
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+           audioSource = GetComponentInParent<AudioSource>(); 
+        }
         // Set up PROJECTILE_ANCHOR if it has not already been done 
         if (PROJECTILE_ANCHOR == null)
         {
@@ -133,6 +140,12 @@ public class Weapon : MonoBehaviour
                 p.transform.rotation = Quaternion.AngleAxis(-10, Vector3.back);
                 p.vel = p.transform.rotation * vel;
                 break;
+        }
+
+        if(audioSource != null && shootClip != null)
+        {
+            Debug.Log("Fire() triggered - attempting to play sound");
+            audioSource.PlayOneShot(shootClip);
         }
     }
     
